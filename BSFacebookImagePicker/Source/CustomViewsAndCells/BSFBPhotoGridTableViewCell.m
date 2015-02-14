@@ -20,8 +20,6 @@
 
 static CGFloat kThumbnailLength = 75;
 static CGFloat kThumbnailMargin = 4;
-static NSUInteger kNumberOfImages = 4;
-
 
 @implementation BSFBPhotoGridTableViewCell
 @synthesize navigationController;
@@ -31,11 +29,13 @@ static NSUInteger kNumberOfImages = 4;
 - (id)initWithReuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:UITableViewCellStyleDefault reuseIdentifier:reuseIdentifier];
-    if (self) {
-      self.selectionStyle = UITableViewCellSelectionStyleNone;
-      
-      _imageViews = [[NSMutableArray alloc] initWithCapacity:4];
-      for (int c = 0; c < kNumberOfImages ;c++) {
+    return self;
+}
+
+- (void)didAddImages:(NSArray*)images {
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    _imageViews = [[NSMutableArray alloc] initWithCapacity:4];
+    for (int c = 0; c < images.count ;c++) {
         UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake((kThumbnailMargin*(c+1)) + (kThumbnailLength*c), 2, kThumbnailLength, kThumbnailLength)];
         imageView.clipsToBounds = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -47,9 +47,7 @@ static NSUInteger kNumberOfImages = 4;
         [imageView addGestureRecognizer:tap];
         imageView.userInteractionEnabled = YES;
         [_imageViews addObject:imageView];
-      }
     }
-    return self;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -61,7 +59,8 @@ static NSUInteger kNumberOfImages = 4;
 
 - (void)setImages:(NSArray *)images {
   _images = images;
-  for (int c = 0; c < ((images.count < kNumberOfImages)?images.count:kNumberOfImages); c++) {
+  [self didAddImages:images];
+  for (int c = 0; c < images.count; c++) {
     [_imageViews[c] setImageWithURL:[NSURL URLWithString:images[c][@"picture"]]];
   }
 }
