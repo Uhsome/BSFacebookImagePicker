@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.resources    = "BSFacebookImagePicker/Public/BSFBAlbumPicker.bundle"
   s.frameworks   = 'CoreText', 'MobileCoreServices', 'SystemConfiguration', 'UIKit', 'Foundation', 'CoreGraphics'
   s.requires_arc = true
-  s.dependency 'AFNetworking', '~> 1.2.0'
+  s.dependency 'AFNetworking', '~> 1.3.4'
   s.prefix_header_contents = <<-EOS
 #import <Availability.h>
 #import <MobileCoreServices/MobileCoreServices.h>
