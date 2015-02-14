@@ -22,6 +22,13 @@
 
 static NSString *albumPlaceholderImageName = @"BSFBAlbumPicker.bundle/albumPlaceholder";
 
+- (void)setItems:(NSMutableArray *)items {
+    [items filterUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+        return [evaluatedObject[@"photos"][@"data"] count] > 0;
+    }]];
+    [super setItems:items];
+}
+
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
   return [self.items count];
